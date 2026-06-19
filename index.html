@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <title>手機 RWD 範例</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7faf9;
+      --panel: #ffffff;
+      --text: #14213d;
+      --muted: #5f6c7b;
+      --brand: #0f766e;
+      --brand-dark: #115e59;
+      --line: #dce5e2;
+      --shadow: 0 14px 40px rgba(20, 33, 61, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      width: min(1120px, calc(100% - 32px));
+      min-height: 64px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-weight: 800;
+      color: var(--brand-dark);
+      letter-spacing: 0;
+    }
+
+    .menu-toggle {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 64px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .menu a {
+      display: block;
+      padding: 12px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .menu a:hover {
+      background: #edf7f5;
+      color: var(--brand-dark);
+    }
+
+    .menu-toggle:focus + .menu,
+    .menu:hover {
+      display: block;
+    }
+
+    .hero {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto 0;
+      display: grid;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 48px;
+      padding: 12px 18px;
+      border: 1px solid var(--brand);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .button.primary {
+      background: var(--brand);
+      color: #ffffff;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--brand-dark);
+    }
+
+    .phone-preview {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .phone-preview img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #dce5e2;
+    }
+
+    .content {
+      width: min(1120px, calc(100% - 32px));
+      margin: 48px auto;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: 1.35rem;
+    }
+
+    .cards {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card,
+    .contact {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 20px;
+    }
+
+    .card h3,
+    .contact h2 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+    }
+
+    .card p,
+    .contact p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .contact {
+      margin-top: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font: inherit;
+    }
+
+    .field textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .site-footer {
+      padding: 24px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (min-width: 640px) {
+      .hero {
+        margin-top: 48px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2.6rem;
+      }
+
+      .actions {
+        flex-direction: row;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 900px) {
+      .menu-toggle {
+        display: none;
+      }
+
+      .menu {
+        display: flex;
+        position: static;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .menu a {
+        padding: 8px 12px;
+      }
+
+      .hero h1 {
+        font-size: 3.4rem;
+      }
+
+      .cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .contact {
+        grid-template-columns: 1fr 1.4fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="主要導覽">
+      <a class="logo" href="#">RWD Demo</a>
+      <button class="menu-toggle" type="button" aria-label="開啟選單">☰</button>
+      <div class="menu">
+        <a href="#features">特色</a>
+        <a href="#contact">聯絡</a>
+        <a href="./manifest.webmanifest">Manifest</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>手機優先的響應式網頁範例</h1>
+        <p>
+          這個頁面示範常見的 mobile-first RWD 寫法：小螢幕單欄、大螢幕多欄，
+          導覽列與表單也會依視窗寬度調整。
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#features">查看特色</a>
+          <a class="button secondary" href="#contact">留下訊息</a>
+        </div>
+      </div>
+
+      <figure class="phone-preview" aria-label="響應式版面示意">
+        <img
+          alt="桌上擺放手機與筆電的工作情境"
+          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
+        >
+      </figure>
+    </section>
+
+    <section class="content" id="features">
+      <h2 class="section-title">RWD 重點</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Mobile First</h3>
+          <p>CSS 先寫手機版，再用 `min-width` media query 擴充平板與桌機版面。</p>
+        </article>
+        <article class="card">
+          <h3>彈性格線</h3>
+          <p>使用 CSS Grid 讓卡片在不同寬度自動從一欄變成兩欄或三欄。</p>
+        </article>
+        <article class="card">
+          <h3>可安裝設定</h3>
+          <p>透過 manifest 提供名稱、啟動畫面、顏色與顯示模式等 PWA 基本資訊。</p>
+        </article>
+      </div>
+
+      <section class="contact" id="contact">
+        <div>
+          <h2>聯絡表單</h2>
+          <p>表單在手機上垂直排列，在桌機上分成說明與輸入區。</p>
+        </div>
+        <form>
+          <div class="field">
+            <label for="name">姓名</label>
+            <input id="name" name="name" autocomplete="name" placeholder="王小明">
+          </div>
+          <div class="field">
+            <label for="message">訊息</label>
+            <textarea id="message" name="message" placeholder="請輸入你的訊息"></textarea>
+          </div>
+          <button class="button primary" type="submit">送出</button>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© 2026 RWD Demo</small>
+  </footer>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js");
+      });
+    }
+  </script>
+</body>
+</html>
