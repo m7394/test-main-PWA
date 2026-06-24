@@ -1,7 +1,7 @@
 {
-  "name": "手機 RWD 範例",
-  "short_name": "RWD Demo",
-  "description": "一個包含手機優先 RWD 版面與 PWA manifest 的範例。",
+  "name": "手機 PWA 範例",
+  "short_name": "PWA Demo",
+  "description": "一個包含手機優先 PWA 版面與 PWA manifest 的範例。",
   "start_url": "./index.html",
   "id": "./",
   "scope": "./",
